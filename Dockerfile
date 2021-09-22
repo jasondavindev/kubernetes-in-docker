@@ -1,6 +1,6 @@
 FROM alpine
 
-ARG K8S_VERSION=1.20.0
+ARG K8S_VERSION=1.22.0
 ARG KIND_VERSION=0.11.1
 
 ENV K8S_VERSION ${K8S_VERSION}
@@ -15,7 +15,10 @@ RUN apk add --no-cache \
     openssl \
     vim \
     wget \
-    nano
+    nano \
+    ncurses \
+    unzip \
+    tar
 
 # Install kubectl
 RUN wget "https://dl.k8s.io/release/v${K8S_VERSION}/bin/linux/amd64/kubectl"; \
@@ -26,6 +29,12 @@ RUN wget "https://dl.k8s.io/release/v${K8S_VERSION}/bin/linux/amd64/kubectl"; \
 RUN wget "https://github.com/kubernetes-sigs/kind/releases/download/v${KIND_VERSION}/kind-linux-amd64"; \
     chmod +x ./kind-linux-amd64; \
     mv ./kind-linux-amd64 /usr/local/bin/kind
+
+# Install kubens and kubectx
+RUN wget https://raw.githubusercontent.com/ahmetb/kubectx/master/kubens; \
+    wget https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx; \
+    chmod +x kubens kubectx; \
+    mv kubens kubectx /usr/local/bin
 
 COPY bootstrap.sh config.yml /root/
 

@@ -14,6 +14,8 @@ alias kd="kubectl describe"
 alias ke="kubectl exec -ti"
 alias krm="kubectl delete"
 alias ka="kubectl apply -f"
+alias kns="kubens"
+alias kctx="kubectx"
 EOF
 
 exec "$@"
