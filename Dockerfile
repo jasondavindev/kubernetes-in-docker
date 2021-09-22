@@ -7,7 +7,6 @@ RUN apk add --no-cache \
     git \
     jq \
     openssl \
-    shadow \
     vim \
     wget \
     nano
