@@ -1,19 +1,7 @@
 #!/bin/bash
 echo Bringing up a cluster
 
-cat > /root/kind.yml <<EOF
-kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-nodes:
-- role: control-plane
-  extraPortMappings:
-  - containerPort: 6443
-    hostPort: 6443
-    listenAddress: "0.0.0.0" # Optional, defaults to "0.0.0.0"
-    protocol: tcp # Optional, defaults to tcp
-EOF
-
-kind create cluster --image kindest/node:v1.20.0 --name my-cluster --config /root/kind.yml || kind export kubeconfig --name my-cluster
+kind create cluster --image kindest/node:v${K8S_VERSION} --name my-cluster --config /root/config.yml || kind export kubeconfig --name my-cluster
 
 echo Modifying Kubernetes config to point to Kind master node
 MASTER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' my-cluster-control-plane)
