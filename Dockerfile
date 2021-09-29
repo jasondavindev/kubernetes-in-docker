@@ -18,7 +18,8 @@ RUN apk add --no-cache \
     nano \
     ncurses \
     unzip \
-    tar
+    tar \
+    gettext
 
 # Install kubectl
 RUN wget "https://dl.k8s.io/release/v${K8S_VERSION}/bin/linux/amd64/kubectl"; \
